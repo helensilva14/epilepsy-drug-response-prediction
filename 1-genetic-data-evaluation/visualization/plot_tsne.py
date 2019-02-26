@@ -20,6 +20,21 @@ def tsne_projection(X, y, perplexity):
     line1, = ax.plot(Xf[:,0], Xf[:,1], 'bo', linewidth=0.5, picker=5, label='Refractory')
     line2, = ax.plot(Xt[:,0], Xt[:,1], 'ro', linewidth=0.5, picker=5, label='Responsive')
     plt.legend(handles=[line1, line2])
+
+    # plt.figure(figsize=(10, 5))
+    # plt.subplot(121)
+    # plt.scatter(X[:, 0], X[:, 1], c=y, marker='^')
+
+    y2 = y # mock predictions values
+
+    fig, ax = plt.subplots()
+    # for i, (x, label, pred) in enumerate(zip(X, y, y2)):
+        # print(x[i])
+        # marker = 'rv' if label == 1 and label == pred else 'bv'
+        # marker = 'bo' if label == 0 and label == pred else 'ro'
+        # # ax.scatter(x[i,0], x[i,1], marker=marker)
+        # ax.scatter(1, 9, marker=(marker))  
+
     plt.show()
 
 def main():
