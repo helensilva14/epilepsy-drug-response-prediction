@@ -21,19 +21,32 @@ def tsne_projection(X, y, perplexity):
     line2, = ax.plot(Xt[:,0], Xt[:,1], 'ro', linewidth=0.5, picker=5, label='Responsive')
     plt.legend(handles=[line1, line2])
 
-    # plt.figure(figsize=(10, 5))
-    # plt.subplot(121)
+    plt.figure(figsize=(10, 5))
+    plt.subplot(121)
     # plt.scatter(X[:, 0], X[:, 1], c=y, marker='^')
 
-    y2 = y # mock predictions values
+    preds = np.random.choice([0, 1], size=(len(X),)) # mock predictions values
 
     fig, ax = plt.subplots()
-    # for i, (x, label, pred) in enumerate(zip(X, y, y2)):
-        # print(x[i])
-        # marker = 'rv' if label == 1 and label == pred else 'bv'
-        # marker = 'bo' if label == 0 and label == pred else 'ro'
-        # # ax.scatter(x[i,0], x[i,1], marker=marker)
-        # ax.scatter(1, 9, marker=(marker))  
+    for i, (x, label, pred) in enumerate(zip(X, y, preds)):
+        if label == 1 and label == pred:
+            m = 'v'
+            color = 'r'
+        elif label == 1 and label != pred:
+            m = 'v'
+            color = 'b' 
+
+        if label == 0 and label == pred:
+            m = 'o'
+            color = 'b'
+        elif label == 0 and label != pred:
+            m = 'o'
+            color = 'r' 
+
+        # m = 'v', color = 'r' if label == 1 and label == pred else  m = 'v', color = 'b'
+        # m = 'o', color = 'b' if label == 0 and label == pred else  m = 'o', color = 'r'
+        # ax.scatter(x[i,0], x[i,1], marker=marker)
+        ax.scatter(x[0], x[1], marker=m, color=color)  
 
     plt.show()
 
