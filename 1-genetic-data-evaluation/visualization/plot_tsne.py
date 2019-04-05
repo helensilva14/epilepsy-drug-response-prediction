@@ -14,39 +14,25 @@ def tsne_projection(X, y, perplexity):
     Xt = X[y == 1]  # all projected samples with response = 1 (responsive)
 
     print('- Plotting projected feats')
-    fig = plt.figure(figsize=(10, 10))
-    ax = fig.add_subplot(111)
-    ax.set_title('t-SNE: perplexity=%d' % perplexity)
-    line1, = ax.plot(Xf[:,0], Xf[:,1], 'bo', linewidth=0.5, picker=5, label='Refractory')
-    line2, = ax.plot(Xt[:,0], Xt[:,1], 'ro', linewidth=0.5, picker=5, label='Responsive')
+    fig1 = plt.figure(figsize=(10, 10))
+    ax1 = fig1.add_subplot(111)
+    ax1.set_title('t-SNE using the original sample labels (perplexity=%d)' % perplexity)
+    line1, = ax1.plot(Xf[:,0], Xf[:,1], 'bo', linewidth=0.5, picker=5, label='Refractory')
+    line2, = ax1.plot(Xt[:,0], Xt[:,1], 'ro', linewidth=0.5, picker=5, label='Responsive')
     plt.legend(handles=[line1, line2])
-
-    plt.figure(figsize=(10, 5))
-    plt.subplot(121)
-    # plt.scatter(X[:, 0], X[:, 1], c=y, marker='^')
 
     preds = np.random.choice([0, 1], size=(len(X),)) # mock predictions values
 
-    fig, ax = plt.subplots()
+    # fig2 = plt.figure(figsize=(10, 10))
+    # ax2 = fig2.add_subplot(121)
+
+    fig, ax2 = plt.subplots()
+    ax2.set_title('t-SNE plotting the original vs predicted sample labels (perplexity=%d)' % perplexity)
     for i, (x, label, pred) in enumerate(zip(X, y, preds)):
-        if label == 1 and label == pred:
-            m = 'v'
-            color = 'r'
-        elif label == 1 and label != pred:
-            m = 'v'
-            color = 'b' 
+        color = 'r' if label == 1 and label == pred else 'b' 
+        color = 'b' if label == 0 and label == pred else 'r' 
 
-        if label == 0 and label == pred:
-            m = 'o'
-            color = 'b'
-        elif label == 0 and label != pred:
-            m = 'o'
-            color = 'r' 
-
-        # m = 'v', color = 'r' if label == 1 and label == pred else  m = 'v', color = 'b'
-        # m = 'o', color = 'b' if label == 0 and label == pred else  m = 'o', color = 'r'
-        # ax.scatter(x[i,0], x[i,1], marker=marker)
-        ax.scatter(x[0], x[1], marker=m, color=color)  
+        ax2.scatter(x[0], x[1], marker='v' if label == 1 else 'o', color=color)  
 
     plt.show()
 
