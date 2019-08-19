@@ -2,7 +2,7 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_confusion_matrix(cm, model_name, file_name):
+def plot_confusion_matrix(cm, model_name, file_name, current_path=False):
     """Function to plot a confusion matrix without normalization"""
     
     plt.clf()
@@ -22,10 +22,11 @@ def plot_confusion_matrix(cm, model_name, file_name):
             plt.text(j, i, str(s[i][j])+" = "+str(cm[i][j]))
             
     # save plot as image 
-    plt.savefig('../figures/default-confusion-matrixes/%s-%s-default-cm' % (model_name.lower(), file_name))
+    file_path = '.' if current_path else '..'
+    plt.savefig('%s/figures/default-confusion-matrixes/%s-%s-default-cm' % (file_path, model_name.lower(), file_name))
     plt.show()    
 
-def plot_normalized_confusion_matrix(cm, model_name, file_name, use_portuguese=False):
+def plot_normalized_confusion_matrix(cm, model_name, file_name, use_portuguese=False, current_path=False):
     """Function to plot a normalized confusion matrix"""
     
     # apply normalization
@@ -62,11 +63,12 @@ def plot_normalized_confusion_matrix(cm, model_name, file_name, use_portuguese=F
     plt.tight_layout()
     
     # save plot as image 
-    plt.savefig('../figures/normalized-confusion-matrixes/%s-%s-normalized-cm.pdf' % (model_name.lower(), file_name), dpi=300, 
+    file_path = '.' if current_path else '..'
+    plt.savefig('%s/figures/normalized-confusion-matrixes/%s-%s-normalized-cm.pdf' % (file_path, model_name.lower(), file_name), dpi=300, 
                 pad_inches=0, bbox_inches='tight')
     plt.show()
 
-def plot_roc_curve(fpr, tpr, auc_score, model_name, file_name, use_portuguese=False):
+def plot_roc_curve(fpr, tpr, auc_score, model_name, file_name, use_portuguese=False, current_path=False):
     """Generic function to plot a ROC curve"""
     
     plt.figure(1)
@@ -87,7 +89,8 @@ def plot_roc_curve(fpr, tpr, auc_score, model_name, file_name, use_portuguese=Fa
     
     plt.legend(loc='best')
     # save plot as image 
-    plt.savefig('../figures/roc-curves/%s-%s-roc-curve.pdf' % (model_name.lower(), file_name), dpi=300)
+    file_path = '.' if current_path else '..'
+    plt.savefig('%s/figures/roc-curves/%s-%s-roc-curve.pdf' % (file_path, model_name.lower(), file_name), dpi=300)
     plt.show()
     
 def calculate_ecdf(predprobs):
@@ -101,7 +104,7 @@ def calculate_ecdf(predprobs):
         
     return percentiles
 
-def plot_ecdf(predprobs_responsive, predprobs_refractory):
+def plot_ecdf(predprobs_responsive, predprobs_refractory, current_path=False):
     """Function to plot the ECDF values vs. Probability Predictions"""
     
     plt.figure(figsize=(10,8))
@@ -112,5 +115,7 @@ def plot_ecdf(predprobs_responsive, predprobs_refractory):
     plt.ylabel('ECDF')
     plt.title('ECDF for Drug Response Probability Predictions') 
     plt.legend(loc='best')
-    plt.savefig('../figures/ecdf/loocv-best-model-genetic-data-ecdf.pdf', dpi=300)
+    # save plot as image 
+    file_path = '.' if current_path else '..'
+    plt.savefig('%s/figures/ecdf/loocv-best-model-genetic-data-ecdf.pdf' % (file_path), dpi=300)
     plt.show()
